@@ -1,0 +1,101 @@
+WARNING!
+---------
+USE ONLY ON FRESH AKELOS INSTALLATIONS AS IT MIGHT OVERRIDE YOUR EXISTING FILES!!!
+
+
+Acts as Taggable Plugin
+===================================
+
+The Taggable Plugin is inspired by the RoR plugin acts_as_taggable_on_steroids
+(http://agilewebdevelopment.com/plugins/acts_as_taggable_on_steroids)
+
+The Purpose of the plugin is to easily make any model taggable.
+
+Setting:
+
+class MyModel extends ActiveRecord
+{
+    var $acts_as = 'taggable';
+}
+
+allows you to add Tags to the model.
+
+Installation
+--------------------------------
+
+    ./script/plugin install acts_as_taggable
+
+The Installer will add some new methods to the app/shared_model.php.
+Please do not modify them, they are marked with
+
+/** AUTOMATED START: getTags */
+function getTags()
+{
+.....
+}
+/** AUTOMATED END: getTags */
+
+
+Adding tags to your models
+----------------------------------
+Simply add the $acts_as = 'taggable' to your model and start adding Tags by:
+
+$model = new MyModel();
+$model->addTag('Some tag');
+$model->addTags('anothertag','Third tag');
+
+When the model is saved, the tags are also being saved.
+
+Removing tags from your models
+----------------------------------
+
+$model->removeTag('Some tag');
+
+will remove the tag "Some tag". After calling $model->save() the tag will be removed from the
+database as well.
+
+
+Retrieving tags from a model
+----------------------------------
+
+To retrieve the tags from a taggable model do:
+
+$array = $model->getTags();
+
+Which will give you the assigned tags as an array.
+
+$tagList = $model->getTagList();
+
+will give you back a TagList Object which has a toString() method:
+
+echo $tagList->toString();
+--> "Some tag", anothertag, "Third tag"
+
+Finding Objects by tags
+----------------------------------
+Examples:
+
+        $this->Products = $this->Product->findTaggedWith($this->params['tag']);
+        $this->Products = $this->Product->findTaggedWith('tag1,tag2');
+        $this->Products = $this->Product->findTaggedWith(array('tag1','tag2'));
+        
+
+
+Generating a Tag Cloud
+------------------------------
+
+Inside your template:
+
+<?php 
+echo $tagcloud_helper->tag_cloud('Product',null,array('link'=>'/product/tag/:tag'));
+?>
+
+Will generate a tag cloud for the Model Product and will link all tags to /product/tag/:tag
+
+
+
+Future
+--------
+
+See TODO file to know what will be implemented into future versions of this plugin.
+

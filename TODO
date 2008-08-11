@@ -1,0 +1,3 @@
+Submit your contributions to http://trac.akelos.org
+
+* Implement a variable tag separator instead of having ', ' fixed for the TagList::toString() method

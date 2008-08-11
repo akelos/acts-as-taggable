@@ -1,0 +1,79 @@
+#tag_cloud ul {
+
+    margin:0;
+
+    padding:0 10px 20px;
+
+    list-style:none;
+
+    text-align:center;
+
+}
+
+#tag_cloud li {
+
+    padding:3px;
+
+    display:inline;
+
+    border:none;
+
+    line-height:30px;
+
+}
+#tag_cloud .l-popular,
+#tag_cloud .l-popular:link,
+
+#tag_cloud .l-popular:visited {
+
+    font-size:13px;
+
+    color:#bdd4b3;
+
+}
+#tag_cloud .popular,
+#tag_cloud .popular:link,
+
+#tag_cloud .popular:visited {
+
+    color:#366050;
+
+    font-size:16px;
+
+}
+#tag_cloud .v-popular,
+#tag_cloud .v-popular:link,
+
+#tag_cloud .v-popular:visited {
+
+    color:#476c5e;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+}
+#tag_cloud .vv-popular,
+#tag_cloud .vv-popular:link,
+
+#tag_cloud .vv-popular:visited {
+
+    color:#3d9673;
+
+    font-size:20px;
+
+    font-weight:bold;
+
+}
+#tag_cloud .vvv-popular,
+#tag_cloud .vvv-popular:link,
+
+#tag_cloud .vvv-popular:visited {
+
+    color:#5b8062;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
