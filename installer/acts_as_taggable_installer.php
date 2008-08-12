@@ -24,8 +24,8 @@ class ActsAsTaggableInstaller extends AkInstaller
         return $false;
     }
     ',
-    'setTags'=>'
-    function setTags() {
+    'set_tags'=>'
+    function set_tags() {
         $args = func_get_args();
         if (isset($this->taggable) && method_exists($this->taggable,"setTags")) {
             return call_user_func_array(array(&$this->taggable,"setTags"),$args);
@@ -33,16 +33,16 @@ class ActsAsTaggableInstaller extends AkInstaller
         return false;
     }
     ',
-    'getTags'=>'
-    function getTags() {
+    'get_tags'=>'
+    function get_tags() {
         if (isset($this->taggable) && method_exists($this->taggable,"getTags")) {
             return $this->taggable->getTags();
         }
         return false;
     }
     ',
-    'getSafeTags'=>'
-    function getSafeTags() {
+    'get_safe_tags'=>'
+    function get_safe_tags() {
         if (isset($this->taggable) && method_exists($this->taggable,"getSafeTags")) {
             return $this->taggable->getSafeTags();
         }
@@ -83,8 +83,8 @@ class ActsAsTaggableInstaller extends AkInstaller
         return false;
     }
     ',
-    '&getTagList'=>'
-    function &getTagList() {
+    '&get_tag_list'=>'
+    function &get_tag_list() {
         $false = false;
         if (isset($this->taggable) && method_exists($this->taggable,"getTagList")) {
             $tagList = &$this->taggable->getTagList();
@@ -102,8 +102,8 @@ class ActsAsTaggableInstaller extends AkInstaller
         return $object;
     }
     ',
-    'getTagType'=>'
-    function getTagType() {
+    'get_tag_type'=>'
+    function get_tag_type() {
         if (!isset($this->__taggable_type)) {
             $this->__taggable_type = strtolower($this->getTableName());
         }

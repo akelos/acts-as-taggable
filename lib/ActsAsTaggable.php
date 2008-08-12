@@ -57,7 +57,7 @@ class ActsAsTaggable extends AkObserver
     }
     function getTagType()
     {
-        return $this->_instance->getTagType();
+        return $this->_instance->get_tag_type();
     }
     function beforeDestroy(&$record)
     {
@@ -65,14 +65,14 @@ class ActsAsTaggable extends AkObserver
          * delete the taggins entries for this taggable_id and taggable_type == CLASS
          */    
         $TA = new Tagging();
-        $TA->deleteAll('taggable_id = '.$record->id.' AND taggable_type = ' . $record->_db->quote_string($record->getTagType()));
+        $TA->deleteAll('taggable_id = '.$record->id.' AND taggable_type = ' . $record->_db->quote_string($record->get_tag_type()));
         return true;
     }
     
     function beforeSave(&$record)
     {
         if (isset($this->_cached_tag_column)) {
-            $tagList = $record->getTagList();
+            $tagList = $record->get_tag_list();
             $record->{$this->_cached_tag_column} = $tagList->toString();
         }
         return true;
@@ -85,7 +85,7 @@ class ActsAsTaggable extends AkObserver
     function _saveTags(&$record)
     {
 
-        $tagList = &$record->getTagList();
+        $tagList = &$record->get_tag_list();
         if ($tagList->size()==0) {
             return true;
         }
@@ -102,25 +102,25 @@ class ActsAsTaggable extends AkObserver
                 $quotedRemovedTags[] = $record->_db->quote_string($rm);
             }
             $sql='UPDATE tag_cloud SET counter = counter-1 WHERE taggable_type='.
-                 $record->_db->quote_string($record->getTagType()).
+                 $record->_db->quote_string($record->get_tag_type()).
                  ' AND tag IN ('.implode(',',$quotedRemovedTags).')';
             $record->_db->execute($sql);
         }
         $newTags = $tagList->getNewTags();
         $TA = new Tagging();
         $TG = new Tag();
-        $TA->deleteAll('taggable_id = '.$record->id.' AND taggable_type = ' . $record->_db->quote_string($record->getTagType()));
+        $TA->deleteAll('taggable_id = '.$record->id.' AND taggable_type = ' . $record->_db->quote_string($record->get_tag_type()));
         
         $savedTags = array();
         foreach ($tagNames as $tagName) {
             $tag=&$TG->findOrCreateBy('name',$tagName);
-            $tagging = $TA->findFirstBy('tag_id AND taggable_id AND taggable_type',$tag->id,$record->id,$record->getTagType());
+            $tagging = $TA->findFirstBy('tag_id AND taggable_id AND taggable_type',$tag->id,$record->id,$record->get_tag_type());
             if (!$tagging) {
                 $tagging = new Tagging();
                 $attributes = array();
                 $attributes['tag_id'] = $tag->id;
                 $attributes['taggable_id'] = $record->id;
-                $attributes['taggable_type'] = $record->getTagType();
+                $attributes['taggable_type'] = $record->get_tag_type();
                 $tagging->setAttributes($attributes,true);
                 $tagging->tag = &$tag;
                 $res = $tagging->save();
@@ -150,7 +150,7 @@ class ActsAsTaggable extends AkObserver
 
         $tagList = &$this->getTagList();
         $tagList->reset();
-        $sql='SELECT tags.* FROM taggings LEFT JOIN tags ON tags.id = taggings.tag_id WHERE taggings.taggable_id='.$this->_instance->id.' AND taggings.taggable_type = "'.$this->_instance->getTagType().'"';
+        $sql='SELECT tags.* FROM taggings LEFT JOIN tags ON tags.id = taggings.tag_id WHERE taggings.taggable_id='.$this->_instance->id.' AND taggings.taggable_type = "'.$this->_instance->get_tag_type().'"';
         $Tag = new Tag();
         $tags =  &$Tag->findBySql($sql);
         $this->addTags($tags);
@@ -214,7 +214,7 @@ class ActsAsTaggable extends AkObserver
         $tags = array_unique($tags);
         $conditions = array();
         
-        $taggableType = $this->_instance->getTagType();
+        $taggableType = $this->_instance->get_tag_type();
         $taggings_alias = $taggableType.'_taggings';
         $tags_alias = $taggableType.'_tags';
         $tag = new Tag();

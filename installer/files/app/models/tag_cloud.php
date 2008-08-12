@@ -7,8 +7,8 @@ class TagCloud extends AkObject
     
     function __construct($type = null)
     {
-        if (is_object($type) && method_exists($type,'getTagType')) {
-            $type = $type->getTagType();
+        if (is_object($type) && method_exists($type,'get_tag_type')) {
+            $type = $type->get_tag_type();
         } else if (is_string($type)) {
             $type = AkInflector::tableize($type);
         }

@@ -57,27 +57,27 @@ class ActsAsTaggableTest extends AkUnitTest
     
     function test_person_set_tags()
     {
-        $this->TaggableThing->setTags('test1,test2');
-        $this->assertEqual(array('test1','test2'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('test1,test2');
+        $this->assertEqual(array('test1','test2'),$this->TaggableThing->get_tags());
     }
     
     function test_person_set_tags_and_save()
     {
         $this->TaggableThing->name='test1';
-        $this->TaggableThing->setTags('test1,test2');
-        $this->assertEqual(array('test1','test2'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('test1,test2');
+        $this->assertEqual(array('test1','test2'),$this->TaggableThing->get_tags());
         $this->TaggableThing->save();
-        $this->assertEqual(array('test1','test2'),$this->TaggableThing->getTags());
+        $this->assertEqual(array('test1','test2'),$this->TaggableThing->get_tags());
     }
     
     function test_person_set_tags_and_save_url_slug1()
     {
         $taggableThing = new TaggableThing();
         $taggableThing->name='test1';
-        $taggableThing->setTags('España,test2');
-        $this->assertEqual(array('España','test2'),$taggableThing->getTags());
+        $taggableThing->set_tags('España,test2');
+        $this->assertEqual(array('España','test2'),$taggableThing->get_tags());
         $taggableThing->save();
-        $this->assertEqual(array('España','test2'),$taggableThing->getTags());
+        $this->assertEqual(array('España','test2'),$taggableThing->get_tags());
         $tagCloud = new TagCloud('TaggableThing');
         $arr = $tagCloud->get();
         $expected = array(array('tag'=>'España','counter'=>1,'slug'=>'espanya'),
@@ -88,10 +88,10 @@ class ActsAsTaggableTest extends AkUnitTest
     function test_person_set_tags_and_save_url_slug2()
     {
         $this->TaggableThing->name='test1';
-        $this->TaggableThing->setTags('München,test2');
-        $this->assertEqual(array('München','test2'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('München,test2');
+        $this->assertEqual(array('München','test2'),$this->TaggableThing->get_tags());
         $this->TaggableThing->save();
-        $this->assertEqual(array('München','test2'),$this->TaggableThing->getTags());
+        $this->assertEqual(array('München','test2'),$this->TaggableThing->get_tags());
         $tagCloud = new TagCloud('TaggableThing');
         $arr = $tagCloud->get();
         $expected = array(array('tag'=>'München','counter'=>1,'slug'=>'muenchen'),
@@ -101,10 +101,10 @@ class ActsAsTaggableTest extends AkUnitTest
     function test_person_set_tags_and_save_url_slug3()
     {
         $this->TaggableThing->name='test1';
-        $this->TaggableThing->setTags('someone@example.com,test2');
-        $this->assertEqual(array('someone@example.com','test2'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('someone@example.com,test2');
+        $this->assertEqual(array('someone@example.com','test2'),$this->TaggableThing->get_tags());
         $this->TaggableThing->save();
-        $this->assertEqual(array('someone@example.com','test2'),$this->TaggableThing->getTags());
+        $this->assertEqual(array('someone@example.com','test2'),$this->TaggableThing->get_tags());
         $tagCloud = new TagCloud('TaggableThing');
         $arr = $tagCloud->get();
         $expected = array(array('tag'=>'someone@example.com','counter'=>1,'slug'=>'someone-at-example.com'),
@@ -114,26 +114,26 @@ class ActsAsTaggableTest extends AkUnitTest
     function test_person_set_cache_tag_column()
     {
         $this->TaggableThing->name='test1';
-        $this->TaggableThing->setTags('test1,test2');
-        $this->assertEqual(array('test1','test2'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('test1,test2');
+        $this->assertEqual(array('test1','test2'),$this->TaggableThing->get_tags());
         $this->TaggableThing->save();
-        $this->assertEqual(array('test1','test2'),$this->TaggableThing->getTags());
+        $this->assertEqual(array('test1','test2'),$this->TaggableThing->get_tags());
         $this->assertEqual('test1,test2',$this->TaggableThing->cache_tags);
     }
     function test_person_set_tags_and_save_find_with_tags()
     {
         $this->TaggableThing->name='test2';
-        $this->TaggableThing->setTags('test3,test2');
-        $this->assertEqual(array('test2','test3'),$this->TaggableThing->getTags());
+        $this->TaggableThing->set_tags('test3,test2');
+        $this->assertEqual(array('test2','test3'),$this->TaggableThing->get_tags());
         $this->TaggableThing->save();
         $taggableThings = $this->TaggableThing->findTaggedWith('test2');
         
         $this->assertEqual('test2',$taggableThings[0]->name);
-        $this->assertEqual(array('test2','test3'),$taggableThings[0]->getTags());
+        $this->assertEqual(array('test2','test3'),$taggableThings[0]->get_tags());
         
         $taggableThings = $this->TaggableThing->findTaggedWith('test3,test4');
         $this->assertEqual('test2',$taggableThings[0]->name);
-        $this->assertEqual(array('test2','test3'),$taggableThings[0]->getTags());
+        $this->assertEqual(array('test2','test3'),$taggableThings[0]->get_tags());
         
         $taggableThings = $this->TaggableThing->findTaggedWith('test2,test3',array('match_all'=>true));
         $this->assertEqual('test2',$taggableThings[0]->name);
@@ -148,7 +148,7 @@ class ActsAsTaggableTest extends AkUnitTest
     function test_find_related_tags()
     {
         $this->TaggableThing->name='test2';
-        $this->TaggableThing->setTags('test3,test2,test1');
+        $this->TaggableThing->set_tags('test3,test2,test1');
         $this->TaggableThing->save();
         
         $relatedTagList = $this->TaggableThing->findRelatedTags('test1');
@@ -164,7 +164,7 @@ class ActsAsTaggableTest extends AkUnitTest
     {
         $tagCloud = new TagCloud('TaggableThing');
         $this->TaggableThing->name='test2';
-        $this->TaggableThing->setTags('test3,test2,test1');
+        $this->TaggableThing->set_tags('test3,test2,test1');
         $this->TaggableThing->save();
         
         $tagCloudArr = $tagCloud->get();
@@ -197,7 +197,7 @@ class ActsAsTaggableTest extends AkUnitTest
     {
         $tagCloud = new TagCloud('TaggableThing');
         $this->TaggableThing->name='test2';
-        $this->TaggableThing->setTags('test3,test2,test1');
+        $this->TaggableThing->set_tags('test3,test2,test1');
         $this->TaggableThing->save();
         
         $tagCloudArr = $tagCloud->get();

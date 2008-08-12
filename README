@@ -28,12 +28,12 @@ Installation
 The Installer will add some new methods to the app/shared_model.php.
 Please do not modify them, they are marked with
 
-/** AUTOMATED START: getTags */
-function getTags()
+/** AUTOMATED START: get_tags */
+function get_tags()
 {
 .....
 }
-/** AUTOMATED END: getTags */
+/** AUTOMATED END: get_tags */
 
 
 Adding tags to your models
@@ -60,11 +60,11 @@ Retrieving tags from a model
 
 To retrieve the tags from a taggable model do:
 
-$array = $model->getTags();
+$array = $model->get_tags();
 
 Which will give you the assigned tags as an array.
 
-$tagList = $model->getTagList();
+$tagList = $model->get_tag_list();
 
 will give you back a TagList Object which has a toString() method:
 
