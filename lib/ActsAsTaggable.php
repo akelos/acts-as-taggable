@@ -43,7 +43,7 @@ class ActsAsTaggable extends AkObserver
         $default_options = array('separator'=>',','cache_column'=>false);
         
         $options = array_merge($default_options, $options);
-        if (isset($options['cache_column'])) {
+        if (isset($options['cache_column']) && $options['cache_column']!=false) {
             $this->_cached_tag_column = $options['cache_column'];
         }
         if ($options['separator']!=false) {
