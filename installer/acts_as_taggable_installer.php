@@ -110,15 +110,6 @@ class ActsAsTaggableInstaller extends AkInstaller
         
         return $this->__taggable_type;
     }
-    ',
-    'init'=>'
-    function init($attributes = array())
-    {
-        parent::init($attributes);
-        if (isset($this->taggable) && method_exists($this->taggable,"load")) {
-            $this->taggable->load();
-        }
-    }
     ');
     function _checkSluggablePlugin()
     {
