@@ -54,6 +54,7 @@ class ActsAsTaggable extends AkObserver
     function load()
     {
         $this->_loadTags();
+        return true;
     }
     function getTagType()
     {
@@ -77,6 +78,12 @@ class ActsAsTaggable extends AkObserver
         }
         return true;
     }
+    
+    function afterInstantiate(&$record)
+    {
+        return $record->taggable->load();
+    }
+    
     function afterSave(&$record)
     {
         return $this->_saveTags(&$record);

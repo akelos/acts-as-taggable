@@ -93,8 +93,8 @@ class ActsAsTaggableInstaller extends AkInstaller
         return $false;
     }
     ',
-    '&instantiate'=>'
-    function &instantiate($record, $set_as_new = true) {
+    '&xinstantiate'=>'
+    function &xinstantiate($record, $set_as_new = true) {
         $object = &parent::instantiate($record, $set_as_new);
         if (isset($object->taggable) && method_exists($object->taggable,"load")) {
             $object->taggable->load();
