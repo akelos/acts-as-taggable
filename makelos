@@ -38,7 +38,7 @@ class Makelos
     function &_getInstaller()
     {
         require_once(dirname(__FILE__).DS.'installer'.DS.'acts_as_taggable_installer.php');
-        $Installer =& new AdminInstaller();
+        $Installer =& new ActsAsTaggableInstaller();
         return $Installer;
     }
 
